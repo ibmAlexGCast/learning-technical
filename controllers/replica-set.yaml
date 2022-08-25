@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  template: #pod template para crear replicas
+  # contenido del pod definition file
+    metadata:
+      name: myapp-pod
+      labels:
+          app: myapp
+          type: front-end
+
+    spec:
+      containers: # una lista de diccionarios de los contenedores
+        - name: nginex-container
+          image: nginex
+  replicas: 10
+  selector: # para incluir pods que no fueron creados en la replica-set (ej: pods creados antes)
+    matchLabels:
+      type: front-end
+# kubectl create -f replica-set.yaml
+# kubectl get replicaset
+# también crea automaticamente los pods y los monitorea, si ya están creados los monitorea (matchLabels)
+# kubectl replace -f replica-set.yaml modifica el replicaset si se modificó el replica-set.yaml
+# kubectl scale --replicas=6 -f replica-set.yaml modifica el archivo
+# kubectl scale replicaset myapp-replicaset --replicas=7 no modifica el archivo
+# kubectl edit replicaset myapp-replicaset modifica la configuracion del replicaset sin modificar el archivo 
+# kubectl explain replicaset explica como debe estar construido un 

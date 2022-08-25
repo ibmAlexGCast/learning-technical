@@ -1,0 +1,34 @@
+# pods
+apiVersion: v1 # v1, apps/v1, ...
+kind: Pod #contenido que se quiere crear, Service (v1), ReplicaSet (apps/v1), Deployment (apps/v1)
+metadata:
+  # diccionario
+  name: myapp-pod
+  labels:
+      # permiten filtrar la aplicación
+      # dentro de labels se puede meter
+      # cualquier par key-value 
+      app: myapp
+      type: front-end
+
+  # ...
+spec:
+  # información sobre el objeto
+  containers: # una lista de diccionarios de los contenedores
+    - name: nginex-container
+      image: nginex
+    - name: otro-contenedor
+      image: otra-imagen
+      env:
+        - name: nombreVariableEnv
+          value: valorVariableEnv
+    # ...
+# https://www.bluematador.com/blog/safely-removing-pods-from-a-kubernetes-node
+# kubectl run nginx --image: nginx crea un pod
+# kubectl create -f pod-definition.yaml crea el pod
+# kubectl delete pod podname
+# kubectl get pods nombre, estado, edad y num de restarts de los pods
+# kubectl describe pod myapp-pod info detallada sobre un pod, ej: qué containers tiene
+# kubectl apply -f pod-definition.yaml también crea el pod o aplica sobre un pod cambios en el pod-definition.yaml
+# kubectl get nodes -o wide información detallada de los nodos
+

@@ -1,0 +1,26 @@
+# replication controller --> replica set (actualización)
+  # load balancing y scaling
+  # redeploy nodos caídos para mantener número de nodos constante
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myapp-rc
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  template: #pod template para crear replicas
+    # contenido del pod definition file
+      metadata:
+        name: myapp-pod
+        labels:
+            app: myapp
+            type: front-end
+
+      spec:
+        containers: # una lista de diccionarios de los contenedores
+          - name: nginex-container
+            image: nginex
+  replicas: 10
+# kubectl create -f replication-controller.yaml
+# kubectl get replicationcontroller crea el rc y además los pods especificados
